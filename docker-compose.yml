@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: pg-container-ss-cloud-auth-server
+    image: postgres:11.3
+    environment:
+      POSTGRES_USER: ${DATASOURCE_USERNAME:-auth}
+      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD:-auth}
+      POSTGRES_DB: ${DATASOURCE_DATABASE_NAME:-auth}
+    volumes:
+      - $HOME/docker/volumes/postgres-ss-cloud-auth-server:/var/lib/postgresql/data
+    ports:
+      - "41432:5432"

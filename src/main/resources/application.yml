@@ -1,0 +1,47 @@
+server:
+  port: ${SERVER_PORT:8091}
+
+spring:
+  main:
+    banner-mode: "off"
+  application:
+    name: ${SERVICE_NAME:auth}
+  flyway:
+    schemas: auth
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driverClassName: org.postgresql.Driver
+
+logging:
+  pattern:
+    console: "${spring.application.name} %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([%X{X-B3-TraceId:-},%X{X-B3-SpanId:-}]){blue} [%thread] %clr(%level) %clr(%logger{36}){magenta} - %msg%n"
+  level:
+    ROOT: INFO
+    org.zalando.logbook.Logbook: TRACE
+    org.springframework: WARN
+    org.apache: WARN
+    org.hibernate: WARN
+
+logbook:
+  exclude:
+    - /actuator/**
+    - /v2/api-docs
+    - /swagger-ui.html
+    - /admin/**
+    - /webjars/**
+    - /swagger-resources/**
+  filter.enabled: true
+  format.style: json
+  obfuscate:
+    headers:
+      - Authorization
+      - X-Secret
+    parameters:
+      - access_token
+      - password
