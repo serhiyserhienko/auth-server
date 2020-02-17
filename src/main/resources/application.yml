@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8091}
+  port: ${SERVER_PORT:8080}
 
 spring:
   main:
@@ -17,6 +17,19 @@ spring:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driverClassName: org.postgresql.Driver
+
+security:
+  oauth2:
+    client:
+      clientId: ${FACEBOOK_CLIENT_ID}
+      clientSecret: ${FACEBOOK_CLIENT_SECRET}
+      accessTokenUri: https://graph.facebook.com/oauth/access_token
+      userAuthorizationUri: https://www.facebook.com/dialog/oauth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://graph.facebook.com/me
 
 logging:
   pattern:
